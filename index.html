@@ -419,13 +419,8 @@
                         <th>Pérdida de Poder Adquisitivo</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><strong id="tabla-fecha">Enero 2022</strong></td>
-                        <td id="tabla-inflacion">36.03%</td>
-                        <td id="tabla-ajustado">$76,177,000</td>
-                        <td id="tabla-diferencia">$20,177,000</td>
-                    </tr>
+                <tbody id="tabla-comparativa">
+                    <!-- Se llena dinámicamente -->
                 </tbody>
             </table>
             
@@ -627,10 +622,31 @@
             document.getElementById('fecha-texto').textContent = getFechaTexto(fechaInicio).toLowerCase();
             document.getElementById('valor-ajustado-texto').textContent = formatCurrency(valorAjustado);
             
-            document.getElementById('tabla-fecha').textContent = getFechaTexto(fechaInicio);
-            document.getElementById('tabla-inflacion').textContent = `${inflacionAcumulada.toFixed(2)}%`;
-            document.getElementById('tabla-ajustado').textContent = `$${formatNumber(valorAjustado)}`;
-            document.getElementById('tabla-diferencia').textContent = `$${formatNumber(diferencia)}`;
+            // Generar tabla comparativa con 6 meses
+            const tablaBody = document.getElementById('tabla-comparativa');
+            tablaBody.innerHTML = '';
+            
+            const fechas = Object.keys(CPI_DATA).filter(f => f >= fechaInicio && f <= "2026-02");
+            const step = Math.max(1, Math.floor(fechas.length / 6));
+            
+            for (let i = 0; i < fechas.length; i += step) {
+                if (tablaBody.children.length >= 6) break;
+                
+                const fecha = fechas[i];
+                const cpi = CPI_DATA[fecha];
+                const valorFecha = calcularValor(valor, cpiInicial, cpi);
+                const diferenciaFecha = valorFecha - valor;
+                const inflacionFecha = ((cpi - cpiInicial) / cpiInicial) * 100;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${getFechaTexto(fecha)}</strong></td>
+                    <td>${inflacionFecha.toFixed(2)}%</td>
+                    <td>$${formatNumber(valorFecha)}</td>
+                    <td>$${formatNumber(diferenciaFecha)}</td>
+                `;
+                tablaBody.appendChild(row);
+            }
             
             const valorEquivalente = valor / (1 + inflacionAcumulada / 100);
             document.getElementById('practica-valor').textContent = formatCurrency(valor);
