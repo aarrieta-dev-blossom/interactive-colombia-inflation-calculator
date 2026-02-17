@@ -528,8 +528,14 @@
             return new Intl.NumberFormat('es-CO').format(Math.round(num));
         }
         
-        function formatMillions(num) {
-            return (num / 1000000).toFixed(1);
+        function formatCurrency(num) {
+            if (num >= 1000000) {
+                return `$${(num / 1000000).toFixed(1)} millones`;
+            } else if (num >= 1000) {
+                return `$${(num / 1000).toFixed(0)} mil`;
+            } else {
+                return `$${Math.round(num)}`;
+            }
         }
         
         function calcularValor(valorInicial, cpiInicial, cpiFinal) {
@@ -617,9 +623,9 @@
             document.getElementById('inflacion-acumulada').textContent = `${inflacionAcumulada.toFixed(2)}%`;
             document.getElementById('valor-ajustado').textContent = `$${formatNumber(valorAjustado)} COP`;
             document.getElementById('valor-diferencia').textContent = `+$${formatNumber(diferencia)} COP`;
-            document.getElementById('valor-texto').textContent = `$${formatMillions(valor)} millones`;
+            document.getElementById('valor-texto').textContent = formatCurrency(valor);
             document.getElementById('fecha-texto').textContent = getFechaTexto(fechaInicio).toLowerCase();
-            document.getElementById('valor-ajustado-texto').textContent = `$${formatMillions(valorAjustado)} millones`;
+            document.getElementById('valor-ajustado-texto').textContent = formatCurrency(valorAjustado);
             
             document.getElementById('tabla-fecha').textContent = getFechaTexto(fechaInicio);
             document.getElementById('tabla-inflacion').textContent = `${inflacionAcumulada.toFixed(2)}%`;
@@ -627,8 +633,8 @@
             document.getElementById('tabla-diferencia').textContent = `$${formatNumber(diferencia)}`;
             
             const valorEquivalente = valor / (1 + inflacionAcumulada / 100);
-            document.getElementById('practica-valor').textContent = `$${formatMillions(valor)} millones`;
-            document.getElementById('practica-equivalente').textContent = `$${formatMillions(valorEquivalente)} millones`;
+            document.getElementById('practica-valor').textContent = formatCurrency(valor);
+            document.getElementById('practica-equivalente').textContent = formatCurrency(valorEquivalente);
             
             crearGrafica(fechaInicio, valor);
         }
