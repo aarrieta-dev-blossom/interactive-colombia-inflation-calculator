@@ -12,6 +12,8 @@ Herramienta web interactiva para calcular el impacto de la inflación en Colombi
 - 📅 **Selector de fechas** desde enero 2022 hasta diciembre 2025
 - 💵 **Entrada personalizable** para cualquier monto en COP
 - 📈 **Gráfica interactiva** mostrando la evolución del valor
+- 📋 **Tabla comparativa** con 6 puntos de tiempo distribuidos uniformemente
+- 💡 **Interpretación dinámica** que se adapta a tus selecciones
 - 📱 **Diseño responsive** para móviles y desktop
 
 ## 🎯 ¿Qué hace?
