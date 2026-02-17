@@ -1,0 +1,14 @@
+# Python files - not needed for web deployment
+*.py
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

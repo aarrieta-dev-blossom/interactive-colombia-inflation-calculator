@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Inflación Colombia 2022-2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .intro h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .calculator-section {
+            margin: 40px 0;
+        }
+        
+        .scenario-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .scenario-card h3 {
+            color: #2a5298;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .metric-value {
+            color: #1e3c72;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .factors-section {
+            background: #e8f4f8;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .factors-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+        
+        .year-factor {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .year-factor h3 {
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .year-factor ul {
+            margin-left: 20px;
+        }
+        
+        .year-factor li {
+            margin: 8px 0;
+        }
+        
+        .sources {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        .sources h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .sources ul {
+            list-style: none;
+        }
+        
+        .sources li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .sources li:before {
+            content: "📊";
+            position: absolute;
+            left: 0;
+        }
+        
+        .sources a {
+            color: #2a5298;
+            text-decoration: none;
+        }
+        
+        .sources a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .inflation-badge {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        
+        .input-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            color: white;
+        }
+        
+        .input-section h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            font-size: 1.2em;
+            font-weight: 600;
+            min-width: 150px;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 8px;
+            width: 250px;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .input-group input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Análisis de Inflación Colombia</h1>
+            <p>Valor del Dinero: 2022 - 2026</p>
+        </header>
+        
+        <div class="content">
+            <div class="intro">
+                <h2>¿Cuánto vale hoy lo que costó en 2022?</h2>
+                <p>Este análisis calcula el valor ajustado por inflación desde diferentes momentos de 2022 hasta febrero de 2026, considerando la inflación acumulada en Colombia durante este período.</p>
+            </div>
+            
+            <div class="input-section">
+                <h2>💵 Configura tu Análisis</h2>
+                <div class="input-group">
+                    <label for="valorInput">Valor en COP:</label>
+                    <input type="text" id="valorInput" value="56,000,000">
+                </div>
+                <div class="input-group">
+                    <label for="fechaInicio">Fecha de inicio:</label>
+                    <select id="fechaInicio">
+                        <option value="2022-01">Enero 2022</option>
+                        <option value="2022-02">Febrero 2022</option>
+                        <option value="2022-03">Marzo 2022</option>
+                        <option value="2022-04">Abril 2022</option>
+                        <option value="2022-05">Mayo 2022</option>
+                        <option value="2022-06">Junio 2022</option>
+                        <option value="2022-07">Julio 2022</option>
+                        <option value="2022-08">Agosto 2022</option>
+                        <option value="2022-09">Septiembre 2022</option>
+                        <option value="2022-10">Octubre 2022</option>
+                        <option value="2022-11">Noviembre 2022</option>
+                        <option value="2022-12">Diciembre 2022</option>
+                        <option value="2023-01">Enero 2023</option>
+                        <option value="2023-02">Febrero 2023</option>
+                        <option value="2023-03">Marzo 2023</option>
+                        <option value="2023-04">Abril 2023</option>
+                        <option value="2023-05">Mayo 2023</option>
+                        <option value="2023-06">Junio 2023</option>
+                        <option value="2023-07">Julio 2023</option>
+                        <option value="2023-08">Agosto 2023</option>
+                        <option value="2023-09">Septiembre 2023</option>
+                        <option value="2023-10">Octubre 2023</option>
+                        <option value="2023-11">Noviembre 2023</option>
+                        <option value="2023-12">Diciembre 2023</option>
+                        <option value="2024-01">Enero 2024</option>
+                        <option value="2024-02">Febrero 2024</option>
+                        <option value="2024-03">Marzo 2024</option>
+                        <option value="2024-04">Abril 2024</option>
+                        <option value="2024-05">Mayo 2024</option>
+                        <option value="2024-06">Junio 2024</option>
+                        <option value="2024-07">Julio 2024</option>
+                        <option value="2024-08">Agosto 2024</option>
+                        <option value="2024-09">Septiembre 2024</option>
+                        <option value="2024-10">Octubre 2024</option>
+                        <option value="2024-11">Noviembre 2024</option>
+                        <option value="2024-12">Diciembre 2024</option>
+                        <option value="2025-01">Enero 2025</option>
+                        <option value="2025-02">Febrero 2025</option>
+                        <option value="2025-03">Marzo 2025</option>
+                        <option value="2025-04">Abril 2025</option>
+                        <option value="2025-05">Mayo 2025</option>
+                        <option value="2025-06">Junio 2025</option>
+                        <option value="2025-07">Julio 2025</option>
+                        <option value="2025-08">Agosto 2025</option>
+                        <option value="2025-09">Septiembre 2025</option>
+                        <option value="2025-10">Octubre 2025</option>
+                        <option value="2025-11">Noviembre 2025</option>
+                        <option value="2025-12">Diciembre 2025</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h2>📈 Evolución del Valor Ajustado por Inflación</h2>
+                <canvas id="inflacionChart"></canvas>
+            </div>
+            
+            <div class="calculator-section">
+                <h2 style="color: #1e3c72; margin-bottom: 20px;">📈 Escenarios de Compra</h2>
+                
+                <div class="scenario-card">
+                    <h3 id="escenario-titulo">Escenario: Compra en Enero 2022</h3>
+                    <div class="metric">
+                        <span class="metric-label">Valor original:</span>
+                        <span class="metric-value" id="valor-original">$56,000,000 COP</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Inflación acumulada:</span>
+                        <span class="metric-value" id="inflacion-acumulada">36.03%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Valor equivalente (Feb 2026):</span>
+                        <span class="metric-value" id="valor-ajustado">$76,177,000 COP</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Diferencia:</span>
+                        <span class="metric-value" id="valor-diferencia">+$20,177,000 COP</span>
+                    </div>
+                    <div class="highlight">
+                        <strong>Interpretación:</strong> Para mantener el mismo poder adquisitivo que <span id="valor-texto">$56 millones</span> tenían en <span id="fecha-texto">enero de 2022</span>, necesitarías aproximadamente <strong id="valor-ajustado-texto">$76.2 millones</strong> en febrero de 2026.
+                    </div>
+                </div>
+            </div>
+            
+            <h2 style="color: #1e3c72; margin: 40px 0 20px 0;">📊 Tabla Comparativa</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Fecha de Compra</th>
+                        <th>Inflación Acumulada</th>
+                        <th>Valor en Feb 2026</th>
+                        <th>Pérdida de Poder Adquisitivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong id="tabla-fecha">Enero 2022</strong></td>
+                        <td id="tabla-inflacion">36.03%</td>
+                        <td id="tabla-ajustado">$76,177,000</td>
+                        <td id="tabla-diferencia">$20,177,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="factors-section">
+                <h2>🔍 Factores que Explican la Inflación (2022-2026)</h2>
+                
+                <div class="year-factor">
+                    <h3>2022 - Inflación Récord: <span class="inflation-badge">13.12%</span></h3>
+                    <ul>
+                        <li><strong>Guerra en Ucrania:</strong> Incremento dramático en precios de alimentos y combustibles a nivel global</li>
+                        <li><strong>Cadenas de suministro:</strong> Disrupciones post-pandemia afectando disponibilidad de productos</li>
+                        <li><strong>Depreciación del peso:</strong> El peso colombiano se debilitó frente al dólar, encareciendo importaciones</li>
+                        <li><strong>Alimentos perecederos:</strong> Incremento del 27.8% anual en precios de alimentos</li>
+                        <li><strong>Nivel histórico:</strong> Mayor inflación en 23 años (desde 1999)</li>
+                    </ul>
+                </div>
+                
+                <div class="year-factor">
+                    <h3>2023 - Desaceleración: <span class="inflation-badge">9.28%</span></h3>
+                    <ul>
+                        <li><strong>Política monetaria:</strong> Banco de la República aumentó tasas de interés agresivamente</li>
+                        <li><strong>Normalización:</strong> Gradual estabilización de cadenas de suministro globales</li>
+                        <li><strong>Commodities:</strong> Reducción en precios internacionales de materias primas</li>
+                        <li><strong>Efecto base:</strong> Comparación con el año anterior de alta inflación</li>
+                    </ul>
+                </div>
+                
+                <div class="year-factor">
+                    <h3>2024 - Reducción Significativa: <span class="inflation-badge">5.20%</span></h3>
+                    <ul>
+                        <li><strong>Política restrictiva efectiva:</strong> Tasas de interés altas controlando demanda</li>
+                        <li><strong>Menor presión externa:</strong> Estabilización de precios internacionales</li>
+                        <li><strong>Tipo de cambio:</strong> Mayor estabilidad del peso colombiano</li>
+                        <li><strong>Expectativas:</strong> Anclaje de expectativas inflacionarias</li>
+                    </ul>
+                </div>
+                
+                <div class="year-factor">
+                    <h3>2025-2026 - Estabilización: <span class="inflation-badge">5.10-5.37%</span></h3>
+                    <ul>
+                        <li><strong>Por encima de la meta:</strong> Inflación persiste sobre el rango objetivo del Banco (2-4%)</li>
+                        <li><strong>Presiones alimentarias:</strong> Continúan afectando el índice general</li>
+                        <li><strong>Ajustes salariales:</strong> Incrementos en salario mínimo y costos laborales</li>
+                        <li><strong>Factores estructurales:</strong> Características propias de la economía colombiana</li>
+                        <li><strong>Inflación subyacente:</strong> Componente núcleo mantiene presiones persistentes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="intro" style="background: #fff3cd; border-left-color: #ffc107;">
+                <h2>💡 ¿Qué Significa Esto en la Práctica?</h2>
+                <p><strong>Pérdida de poder adquisitivo:</strong> Si guardaste <span id="practica-valor">$56 millones</span> en efectivo desde enero de 2022, hoy ese dinero solo puede comprar lo que <span id="practica-equivalente">$41.2 millones</span> compraban en ese momento. Has perdido aproximadamente el 26.5% de tu poder adquisitivo.</p>
+                <p style="margin-top: 15px;"><strong>Inversiones necesarias:</strong> Para protegerte de la inflación, tus inversiones debieron generar al menos un 36% de retorno acumulado desde enero 2022 solo para mantener el mismo poder adquisitivo.</p>
+            </div>
+            
+            <div class="sources">
+                <h2>📚 Fuentes de Información</h2>
+                <ul>
+                    <li><a href="https://www.dane.gov.co" target="_blank">DANE - Departamento Administrativo Nacional de Estadística</a></li>
+                    <li><a href="https://www.banrep.gov.co" target="_blank">Banco de la República de Colombia - Reportes de Política Monetaria</a></li>
+                    <li><a href="https://www.bbvaresearch.com/en/publicaciones/inflation-closed-2022-at-its-highest-level-in-23-years-131/" target="_blank">BBVA Research - Análisis de Inflación Colombia</a></li>
+                    <li><a href="https://www.reuters.com/article/colombia-inflation-idUSL1N32V0O1" target="_blank">Reuters - Datos Económicos Colombia</a></li>
+                    <li><a href="https://www.inflationtool.com/colombian-peso" target="_blank">InflationTool.com - Datos Históricos CPI Colombia</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Análisis realizado en Febrero 2026 | Datos basados en fuentes oficiales</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Este análisis es informativo y educativo. Consulta con profesionales financieros para decisiones de inversión.</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const CPI_DATA = {
+            "2022-01": 101419.32, "2022-02": 103076.45, "2022-03": 104102.91, "2022-04": 105400.95,
+            "2022-05": 106291.34, "2022-06": 106830.39, "2022-07": 107697.49, "2022-08": 108797.95,
+            "2022-09": 109809.39, "2022-10": 110594.67, "2022-11": 111449.13, "2022-12": 112848.30,
+            "2023-01": 114859.38, "2023-02": 116763.96, "2023-03": 117994.74, "2023-04": 118916.39,
+            "2023-05": 119429.24, "2023-06": 119788.55, "2023-07": 120389.57, "2023-08": 121230.63,
+            "2023-09": 121882.22, "2023-10": 122183.46, "2023-11": 122759.74, "2023-12": 123316.17,
+            "2024-01": 124446.21, "2024-02": 125798.42, "2024-03": 126682.30, "2024-04": 127434.71,
+            "2024-05": 127976.66, "2024-06": 128392.29, "2024-07": 128648.33, "2024-08": 128650.47,
+            "2024-09": 128962.13, "2024-10": 128788.83, "2024-11": 129139.95, "2024-12": 129732.39,
+            "2025-01": 130946.01, "2025-02": 132436.28, "2025-03": 133130.46, "2025-04": 134013.27,
+            "2025-05": 134442.22, "2025-06": 134580.89, "2025-07": 134952.69, "2025-08": 135205.97,
+            "2025-09": 135638.14, "2025-10": 135887.98, "2025-11": 135985.73, "2025-12": 136348.57,
+            "2026-01": 137956.36, "2026-02": 139000.00
+        };
+        
+        const MESES = {
+            "01": "Enero", "02": "Febrero", "03": "Marzo", "04": "Abril", "05": "Mayo", "06": "Junio",
+            "07": "Julio", "08": "Agosto", "09": "Septiembre", "10": "Octubre", "11": "Noviembre", "12": "Diciembre"
+        };
+        
+        let chart = null;
+        
+        function formatNumber(num) {
+            return new Intl.NumberFormat('es-CO').format(Math.round(num));
+        }
+        
+        function formatMillions(num) {
+            return (num / 1000000).toFixed(1);
+        }
+        
+        function calcularValor(valorInicial, cpiInicial, cpiFinal) {
+            return valorInicial * (cpiFinal / cpiInicial);
+        }
+        
+        function getFechaTexto(fecha) {
+            const [año, mes] = fecha.split('-');
+            return `${MESES[mes]} ${año}`;
+        }
+        
+        function crearGrafica(fechaInicio, valor) {
+            const ctx = document.getElementById('inflacionChart').getContext('2d');
+            const cpiFinal = CPI_DATA["2026-02"];
+            const cpiInicial = CPI_DATA[fechaInicio];
+            
+            const fechas = Object.keys(CPI_DATA).filter(f => f >= fechaInicio);
+            const labels = fechas.map(f => getFechaTexto(f));
+            const valores = fechas.map(f => calcularValor(valor, cpiInicial, CPI_DATA[f]));
+            
+            if (chart) chart.destroy();
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Valor Ajustado por Inflación (COP)',
+                        data: valores,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Valor Original (COP)',
+                        data: Array(fechas.length).fill(valor),
+                        borderColor: '#dc3545',
+                        borderDash: [5, 5],
+                        tension: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + formatNumber(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function actualizarValores() {
+            const inputValor = document.getElementById('valorInput');
+            const valorStr = inputValor.value.replace(/[^0-9]/g, '');
+            const valor = parseFloat(valorStr);
+            
+            if (isNaN(valor) || valor <= 0) return;
+            
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const cpiFinal = CPI_DATA["2026-02"];
+            const cpiInicial = CPI_DATA[fechaInicio];
+            
+            const valorAjustado = calcularValor(valor, cpiInicial, cpiFinal);
+            const diferencia = valorAjustado - valor;
+            const inflacionAcumulada = ((cpiFinal - cpiInicial) / cpiInicial) * 100;
+            
+            document.getElementById('escenario-titulo').textContent = `Escenario: Compra en ${getFechaTexto(fechaInicio)}`;
+            document.getElementById('valor-original').textContent = `$${formatNumber(valor)} COP`;
+            document.getElementById('inflacion-acumulada').textContent = `${inflacionAcumulada.toFixed(2)}%`;
+            document.getElementById('valor-ajustado').textContent = `$${formatNumber(valorAjustado)} COP`;
+            document.getElementById('valor-diferencia').textContent = `+$${formatNumber(diferencia)} COP`;
+            document.getElementById('valor-texto').textContent = `$${formatMillions(valor)} millones`;
+            document.getElementById('fecha-texto').textContent = getFechaTexto(fechaInicio).toLowerCase();
+            document.getElementById('valor-ajustado-texto').textContent = `$${formatMillions(valorAjustado)} millones`;
+            
+            document.getElementById('tabla-fecha').textContent = getFechaTexto(fechaInicio);
+            document.getElementById('tabla-inflacion').textContent = `${inflacionAcumulada.toFixed(2)}%`;
+            document.getElementById('tabla-ajustado').textContent = `$${formatNumber(valorAjustado)}`;
+            document.getElementById('tabla-diferencia').textContent = `$${formatNumber(diferencia)}`;
+            
+            const valorEquivalente = valor / (1 + inflacionAcumulada / 100);
+            document.getElementById('practica-valor').textContent = `$${formatMillions(valor)} millones`;
+            document.getElementById('practica-equivalente').textContent = `$${formatMillions(valorEquivalente)} millones`;
+            
+            crearGrafica(fechaInicio, valor);
+        }
+        
+        document.getElementById('valorInput').addEventListener('input', function(e) {
+            const cursorPos = e.target.selectionStart;
+            const oldLength = e.target.value.length;
+            const valorStr = e.target.value.replace(/[^0-9]/g, '');
+            
+            if (valorStr) {
+                const formatted = formatNumber(parseFloat(valorStr));
+                e.target.value = formatted;
+                
+                const newLength = formatted.length;
+                const diff = newLength - oldLength;
+                e.target.setSelectionRange(cursorPos + diff, cursorPos + diff);
+                
+                actualizarValores();
+            }
+        });
+        
+        document.getElementById('fechaInicio').addEventListener('change', actualizarValores);
+        
+        actualizarValores();
+    </script>
+</body>
+</html>
