@@ -472,8 +472,8 @@
             
             <div class="intro" style="background: #fff3cd; border-left-color: #ffc107;">
                 <h2>💡 ¿Qué Significa Esto en la Práctica?</h2>
-                <p><strong>Pérdida de poder adquisitivo:</strong> Si guardaste <span id="practica-valor">$56 millones</span> en efectivo desde enero de 2022, hoy ese dinero solo puede comprar lo que <span id="practica-equivalente">$41.2 millones</span> compraban en ese momento. Has perdido aproximadamente el 26.5% de tu poder adquisitivo.</p>
-                <p style="margin-top: 15px;"><strong>Inversiones necesarias:</strong> Para protegerte de la inflación, tus inversiones debieron generar al menos un 36% de retorno acumulado desde enero 2022 solo para mantener el mismo poder adquisitivo.</p>
+                <p><strong>Pérdida de poder adquisitivo:</strong> Si guardaste <span id="practica-valor">$56 millones</span> en efectivo desde <span id="practica-fecha">enero de 2022</span>, hoy ese dinero solo puede comprar lo que <span id="practica-equivalente">$41.2 millones</span> compraban en ese momento. Has perdido aproximadamente el <span id="practica-porcentaje">26.5%</span> de tu poder adquisitivo.</p>
+                <p style="margin-top: 15px;"><strong>Inversiones necesarias:</strong> Para protegerte de la inflación, tus inversiones debieron generar al menos un <span id="practica-retorno">36%</span> de retorno acumulado desde <span id="practica-fecha2">enero 2022</span> solo para mantener el mismo poder adquisitivo.</p>
             </div>
             
             <div class="sources">
@@ -649,8 +649,14 @@
             }
             
             const valorEquivalente = valor / (1 + inflacionAcumulada / 100);
+            const perdidaPorcentaje = ((valor - valorEquivalente) / valor * 100);
+            
             document.getElementById('practica-valor').textContent = formatCurrency(valor);
+            document.getElementById('practica-fecha').textContent = getFechaTexto(fechaInicio).toLowerCase();
             document.getElementById('practica-equivalente').textContent = formatCurrency(valorEquivalente);
+            document.getElementById('practica-porcentaje').textContent = `${perdidaPorcentaje.toFixed(1)}%`;
+            document.getElementById('practica-retorno').textContent = `${inflacionAcumulada.toFixed(0)}%`;
+            document.getElementById('practica-fecha2').textContent = getFechaTexto(fechaInicio).toLowerCase();
             
             crearGrafica(fechaInicio, valor);
         }
